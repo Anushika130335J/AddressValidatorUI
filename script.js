@@ -1,11 +1,14 @@
 const addressInput = document.getElementById('addressInput');
 const dropdown = document.getElementById('dropdown');
 const validateBtn = document.getElementById('validateBtn');
+const validationMessage = document.getElementById('validationMessage');
 
 let timeout = null;
 
 addressInput.addEventListener('input', function () {
   clearTimeout(timeout);
+
+  validationMessage.textContent = '';
 
   const query = addressInput.value.trim();
   if (!query) {
@@ -20,23 +23,11 @@ addressInput.addEventListener('input', function () {
 
 async function fetchCompletions(query) {
   const requestData = {
-    key: "VXCBGN3KRH7ELMA6YJP9",
-    secret: "C9FDAYQTHULJ6KMXEV8G",
-    q: query,
-    format: "json",
-    delivered: "",
-    post_box: "",
-    rural: "",
-    strict: "",
-    region_code: "",
-    domain: "",
-    max: "",
-    highlight: "",
-    ascii: ""
+    q: query
   };
 
   try {
-    const response = await fetch('https://17iq97ykse.execute-api.ap-southeast-2.amazonaws.com/dev/autocomplete', {
+    const response = await fetch('https://dr238d0s7i.execute-api.ap-southeast-2.amazonaws.com/dev/autocomplete', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestData)
@@ -72,32 +63,42 @@ function showDropdown(completions) {
 validateBtn.addEventListener('click', async function () {
   const address = addressInput.value.trim();
   if (!address) {
-    alert('Please enter an address');
+    validationMessage.textContent = 'Please enter an address';
+    validationMessage.style.color = 'red';
     return;
   }
 
-  const requestData = {
-    key: "VXCBGN3KRH7ELMA6YJP9",
-    secret: "C9FDAYQTHULJ6KMXEV8G",
-    format: "json",
-    q: address,
-    post_box: "0",
-    region_code: "1",
-    census: "2018",
-    domain: "",
-    ascii: "1"
-  };
+
+  const requestData = { q: address };
 
   try {
-    const response = await fetch('https://17iq97ykse.execute-api.ap-southeast-2.amazonaws.com/dev/verification', {
+    const response = await fetch('https://dr238d0s7i.execute-api.ap-southeast-2.amazonaws.com/dev/verification', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestData)
     });
 
     const data = await response.json();
-    alert(`Matched: ${data.matched}, Success: ${data.success}`);
+
+    if (data.matched === true) {
+      validationMessage.textContent = '✅ Valid address!';
+      validationMessage.style.color = 'limegreen';
+    } else {
+      validationMessage.textContent = '❌ Not a valid address';
+      validationMessage.style.color = 'crimson';
+    }
   } catch (error) {
     console.error('Error validating address:', error);
+    validationMessage.textContent = '⚠️ Validation failed. Please try again later.';
+    validationMessage.style.color = 'orange';
   }
 });
+
+// Hide dropdown if clicking outside input or dropdown
+document.addEventListener('click', (event) => {
+  const isClickInside = addressInput.contains(event.target) || dropdown.contains(event.target);
+  if (!isClickInside) {
+    dropdown.style.display = 'none';
+  }
+});
+

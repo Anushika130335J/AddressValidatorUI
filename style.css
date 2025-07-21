@@ -1,18 +1,78 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 40px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  height: 100vh;
+  background: url('NZ1.jpg') center/cover no-repeat fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000; /* fallback */
+}
+
+#lookupContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: rgba(255, 255, 255, 0.15); /* frosted glass */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 30px 40px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 2px 2px 5px #000;
+  letter-spacing: 1px;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 input[type="text"] {
   width: 300px;
-  padding: 8px;
+  padding: 10px 12px;
   font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.5);
 }
 
 button {
-  padding: 8px 16px;
+  padding: 10px 18px;
   font-size: 16px;
   margin-left: 10px;
+  background: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+#validationMessage {
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
 }
 
 .dropdown {
@@ -23,6 +83,10 @@ button {
   position: absolute;
   background: #fff;
   z-index: 10;
+  top: 100%;
+  left: 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .dropdown div {
@@ -32,4 +96,14 @@ button {
 
 .dropdown div:hover {
   background: #f0f0f0;
+}
+
+#tagline {
+  color: #ddd;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 1px 1px 3px #000;
+  font-style: italic;
 }

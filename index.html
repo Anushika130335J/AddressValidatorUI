@@ -6,10 +6,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<h2>Address Lookup</h2>
-<div style="position: relative;">
-  <input type="text" id="addressInput" placeholder="Start typing address..." autocomplete="off" />
-  <button id="validateBtn">Validate</button>
+
+<div id="lookupContainer">
+  <h2>Verify Your New Zealand Address</h2>
+  <p id="tagline">Quickly check if a New Zealand address is valid and deliverable.</p>
+  <div class="inputRow">
+    <input type="text" id="addressInput" placeholder="Start typing address..." autocomplete="off" />
+    <button id="validateBtn">Validate</button>
+    <div id="validationMessage"></div>
+  </div>
+
   <div id="dropdown" class="dropdown" style="display: none;"></div>
 </div>
 
